@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(org.simbirsoft.dashboard.core.urls.User.user)
 public class UserController {
 
     private final UserService userService;
