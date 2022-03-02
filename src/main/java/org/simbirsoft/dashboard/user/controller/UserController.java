@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping
-    public void updateUser(User user){
+    public void updateUser(@RequestBody User user){
         userService.updateUser(user);
     }
 }
