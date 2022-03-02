@@ -12,4 +12,12 @@ public interface UserService {
     List<User> getAll(Pageable pageable);
 
     User getById(String id);
+
+    void delete(String id);
+
+    void updateUser(User user);
+
+    User me();
+
+    User findByUsername(String name);
 }
