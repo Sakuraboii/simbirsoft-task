@@ -23,8 +23,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public void createTask(@RequestBody TaskRequestDto taskRequestDto){
-        taskService.save(taskMapper.fromDto(taskRequestDto));
+    public void createTask(@RequestBody TaskRequestDto taskRequestDto, String boardId){
+        taskService.save(taskMapper.fromDto(taskRequestDto), boardId);
     }
 
     @PutMapping

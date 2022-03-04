@@ -1,22 +1,36 @@
 package org.simbirsoft.dashboard.task.service.impl;
 
+import org.simbirsoft.dashboard.board.entity.Board;
+import org.simbirsoft.dashboard.board.repository.BoardRepository;
 import org.simbirsoft.dashboard.task.entity.Task;
 import org.simbirsoft.dashboard.task.repository.TaskRepository;
 import org.simbirsoft.dashboard.task.service.TaskService;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    private final BoardRepository boardRepository;
+
+    public TaskServiceImpl(TaskRepository taskRepository, BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
         this.taskRepository = taskRepository;
     }
 
     @Override
-    public void save(Task task) {
-        taskRepository.save(task);
+    public void save(Task task,String boardId) {
+        Optional<Board> board = boardRepository.findById(boardId);
+
+        Task taskSave = taskRepository.save(task);
+        if (board.isPresent()){
+            board.get().getTasks().add(taskSave);
+            boardRepository.save(board.get());
+        }
+
     }
 
     @Override

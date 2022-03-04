@@ -20,8 +20,8 @@ public class BoardController {
     }
 
     @PostMapping
-    public BoardResponseDto create(){
-        return boardMapper.fromEntity(boardService.create());
+    public BoardResponseDto create(String projectId){
+        return boardMapper.fromEntity(boardService.create(projectId));
     }
 
     @GetMapping
