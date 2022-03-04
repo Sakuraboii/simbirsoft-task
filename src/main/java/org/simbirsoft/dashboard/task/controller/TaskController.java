@@ -37,8 +37,4 @@ public class TaskController {
         taskService.delete(taskId);
     }
 
-    @GetMapping("/all/inprogress")
-    public List<TaskResponseDto> getAllInProgress(){
-        return null;
-    }
 }
