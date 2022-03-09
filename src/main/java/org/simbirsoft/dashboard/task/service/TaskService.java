@@ -1,11 +1,14 @@
 package org.simbirsoft.dashboard.task.service;
 
-import org.simbirsoft.dashboard.task.entity.Task;
+import org.simbirsoft.dashboard.task.entity.dto.TaskRequestDto;
+import org.simbirsoft.dashboard.task.entity.dto.TaskResponseDto;
+
+import java.util.List;
 
 public interface TaskService {
-    void save(Task task ,String boardId);
+    void save(TaskRequestDto task , Long boardId);
 
-    void delete(String taskId);
+    List<TaskResponseDto> delete(Long taskId);
 
-    void update(Task fromDto, String taskId);
+    void update(TaskRequestDto fromDto, Long taskId);
 }

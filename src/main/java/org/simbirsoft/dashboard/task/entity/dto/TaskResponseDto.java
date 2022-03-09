@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class TaskResponseDto {
 
-    private String id;
+    private Long id;
 
     private UserResponseDto author;
 
@@ -21,11 +21,11 @@ public class TaskResponseDto {
 
     private Date completionDate;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

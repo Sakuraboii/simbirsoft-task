@@ -1,6 +1,7 @@
 package org.simbirsoft.dashboard.user.service;
 
 import org.simbirsoft.dashboard.user.entity.User;
+import org.simbirsoft.dashboard.user.entity.dto.UserResponseDto;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -9,13 +10,13 @@ public interface UserService {
 
     void save(User user);
 
-    List<User> getAll(Pageable pageable);
+    List<UserResponseDto> getAll(Pageable pageable);
 
-    User getById(String id);
+    UserResponseDto getById(Long id);
 
-    void delete(String id);
+    void delete(Long id);
 
-    void updateUser(User user);
+    UserResponseDto updateUser(User user);
 
     User me();
 

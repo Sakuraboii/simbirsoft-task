@@ -3,40 +3,39 @@ package org.simbirsoft.dashboard.project.controller;
 import org.simbirsoft.dashboard.core.urls.Project;
 import org.simbirsoft.dashboard.project.entity.dto.ProjectRequestDto;
 import org.simbirsoft.dashboard.project.entity.dto.ProjectResponseDto;
-import org.simbirsoft.dashboard.project.mapper.ProjectMapper;
 import org.simbirsoft.dashboard.project.service.ProjectService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Project.project)
+@RequestMapping(Project.PROJECT)
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    private final ProjectMapper projectMapper;
 
-    public ProjectController(ProjectService projectService, ProjectMapper projectMapper) {
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
-        this.projectMapper = projectMapper;
     }
 
     @PostMapping
-    public void create(@RequestBody ProjectRequestDto projectRequestDto){
-        projectService.create(projectMapper.fromDto(projectRequestDto));
+    public void create(@RequestBody ProjectRequestDto projectRequestDto) {
+        projectService.create(projectRequestDto);
     }
 
     @GetMapping
-    public ProjectResponseDto getById(String id){
-        return projectMapper.fromEntity(projectService.getById(id));
+    public ResponseEntity<ProjectResponseDto> getById(Long id) {
+        return new ResponseEntity<>(projectService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteById(String id){
+    public void deleteById(Long id) {
         projectService.deleteById(id);
     }
 
     @PutMapping
-    public void updateProject(@RequestBody ProjectRequestDto projectRequestDto, String projectId){
-        projectService.updateProject(projectRequestDto,projectId);
+    public ResponseEntity<ProjectResponseDto> updateProject(@RequestBody ProjectRequestDto projectRequestDto, Long projectId) {
+        return new ResponseEntity<>(projectService.updateProject(projectRequestDto, projectId), HttpStatus.OK);
     }
 }

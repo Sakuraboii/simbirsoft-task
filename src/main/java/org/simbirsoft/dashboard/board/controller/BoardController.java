@@ -1,41 +1,39 @@
 package org.simbirsoft.dashboard.board.controller;
 
 import org.simbirsoft.dashboard.board.entity.dto.BoardResponseDto;
-import org.simbirsoft.dashboard.board.mapper.BoardMapper;
 import org.simbirsoft.dashboard.board.service.BoardService;
 import org.simbirsoft.dashboard.core.urls.Board;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Board.board)
+@RequestMapping(Board.BOARD)
 public class BoardController {
 
     private final BoardService boardService;
 
-    private final BoardMapper boardMapper;
-
-    public BoardController(BoardService boardService, BoardMapper boardMapper) {
+    public BoardController(BoardService boardService) {
         this.boardService = boardService;
-        this.boardMapper = boardMapper;
     }
 
     @PostMapping
-    public BoardResponseDto create(String projectId){
-        return boardMapper.fromEntity(boardService.create(projectId));
+    public ResponseEntity<BoardResponseDto> create(Long projectId){
+        return new ResponseEntity<>(boardService.create(projectId),HttpStatus.OK) ;
     }
 
     @GetMapping
-    public BoardResponseDto getById(String id){
-        return boardMapper.fromEntity(boardService.getById(id));
+    public ResponseEntity<BoardResponseDto> getById(Long id){
+        return new ResponseEntity<>(boardService.getById(id),HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteById(String id){
+    public void deleteById(Long id){
         boardService.deleteById(id);
     }
 
-    @GetMapping("/count")
-    public Long getCountUnfinishedTask(String id){
+    @GetMapping(Board.COUNT.COUNT)
+    public Long getCountUnfinishedTask(Long id){
         return boardService.getCountUnfinishedTask(id);
     }
 }

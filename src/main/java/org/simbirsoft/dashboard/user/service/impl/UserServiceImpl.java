@@ -1,6 +1,8 @@
 package org.simbirsoft.dashboard.user.service.impl;
 
 import org.simbirsoft.dashboard.user.entity.User;
+import org.simbirsoft.dashboard.user.entity.dto.UserResponseDto;
+import org.simbirsoft.dashboard.user.mapper.UserMapper;
 import org.simbirsoft.dashboard.user.repository.UserRepository;
 import org.simbirsoft.dashboard.user.service.UserService;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +17,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -25,29 +31,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll(Pageable pageable) {
-        return userRepository.findAll(pageable).getContent();
+    public List<UserResponseDto> getAll(Pageable pageable) {
+        return userMapper.fromEntities(userRepository.findAll(pageable).getContent());
     }
 
     @Override
-    public User getById(String id) {
+    public UserResponseDto getById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        if (user.isPresent()){
+            return userMapper.fromEntity(user.get());
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
     @Override
-    public void updateUser(User user) {
+    public UserResponseDto updateUser(User user) {
         User me = me();
 
         me.setPassword(user.getPassword() == null ? me.getPassword() : user.getPassword());
         me.setUsername(user.getUsername() == null ? me.getUsername() : user.getUsername());
 
-        userRepository.save(me);
+        return userMapper.fromEntity(userRepository.save(me));
     }
 
     @Override

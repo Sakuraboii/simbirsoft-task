@@ -2,23 +2,22 @@ package org.simbirsoft.dashboard.user.controller;
 
 import org.simbirsoft.dashboard.user.entity.User;
 import org.simbirsoft.dashboard.user.entity.dto.UserResponseDto;
-import org.simbirsoft.dashboard.user.mapper.UserMapper;
 import org.simbirsoft.dashboard.user.service.UserService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(org.simbirsoft.dashboard.core.urls.User.user)
+@RequestMapping(org.simbirsoft.dashboard.core.urls.User.USER)
 public class UserController {
 
     private final UserService userService;
 
-    private final UserMapper userMapper;
 
-    public UserController(UserService userService, UserMapper userMapper){
-        this.userMapper = userMapper;
+    public UserController(UserService userService){
         this.userService = userService;
     }
 
@@ -27,23 +26,23 @@ public class UserController {
         userService.save(user);
     }
 
-    @GetMapping("/all")
-    public List<UserResponseDto> getAll(Pageable pageable){
-        return userMapper.fromEntities(userService.getAll(pageable));
+    @GetMapping(org.simbirsoft.dashboard.core.urls.User.All.ALL)
+    public ResponseEntity<List<UserResponseDto>> getAll(Pageable pageable){
+        return new ResponseEntity<>(userService.getAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public UserResponseDto getById(@PathVariable String id){
-        return userMapper.fromEntity(userService.getById(id));
+    @GetMapping(org.simbirsoft.dashboard.core.urls.User.Id.FULL)
+    public ResponseEntity<UserResponseDto> getById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteUser(String id){
+    public void deleteUser(Long id){
         userService.delete(id);
     }
 
     @PutMapping
-    public void updateUser(User user){
-        userService.updateUser(user);
+    public ResponseEntity<UserResponseDto> updateUser(User user){
+        return new ResponseEntity<>(userService.updateUser(user),HttpStatus.OK);
     }
 }

@@ -18,7 +18,7 @@ public class TaskMapper {
 
     private final UserMapper userMapper;
 
-    public TaskMapper(UserRepository userRepository,UserMapper userMapper){
+    public TaskMapper(UserRepository userRepository, UserMapper userMapper) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
@@ -40,12 +40,16 @@ public class TaskMapper {
         return task;
     }
 
-    public TaskResponseDto fromEntity(Task task){
+    public TaskResponseDto fromEntity(Task task) {
         TaskResponseDto taskResponseDto = new TaskResponseDto();
 
         taskResponseDto.setId(task.getId());
-        taskResponseDto.setAuthor(userMapper.fromEntity(task.getAuthor()));
-        taskResponseDto.setExecutor(userMapper.fromEntity(task.getExecutor()));
+        if (task.getAuthor() != null) {
+            taskResponseDto.setAuthor(userMapper.fromEntity(task.getAuthor()));
+        }
+        if (task.getExecutor() != null) {
+            taskResponseDto.setExecutor(userMapper.fromEntity(task.getExecutor()));
+        }
         taskResponseDto.setCompletionDate(task.getCompletionDate());
         taskResponseDto.setRegistrationDate(task.getRegistrationDate());
         taskResponseDto.setStatus(task.getStatus());
@@ -54,10 +58,10 @@ public class TaskMapper {
         return taskResponseDto;
     }
 
-    public List<TaskResponseDto> fromEntities(List<Task> tasks){
+    public List<TaskResponseDto> fromEntities(List<Task> tasks) {
         List<TaskResponseDto> taskList = new ArrayList<>();
 
-        for (Task task : tasks){
+        for (Task task : tasks) {
             taskList.add(fromEntity(task));
         }
 

@@ -1,7 +1,5 @@
 package org.simbirsoft.dashboard.user.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -10,9 +8,8 @@ import javax.validation.constraints.NotNull;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column(name = "username")
     @NotNull
@@ -38,7 +35,7 @@ public class User {
         return this.password;
     }
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
