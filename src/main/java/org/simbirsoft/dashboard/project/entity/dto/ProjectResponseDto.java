@@ -5,7 +5,7 @@ import org.simbirsoft.dashboard.task.entity.Status;
 
 public class ProjectResponseDto {
 
-    private String id;
+    private Long id;
 
     private BoardResponseDto board;
 
@@ -15,7 +15,7 @@ public class ProjectResponseDto {
 
     private Status status;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -35,7 +35,7 @@ public class ProjectResponseDto {
         return status;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
