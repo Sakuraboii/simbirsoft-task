@@ -1,6 +1,8 @@
 package org.simbirsoft.dashboard.board.service.impl;
 
 import org.simbirsoft.dashboard.board.entity.Board;
+import org.simbirsoft.dashboard.board.entity.dto.BoardResponseDto;
+import org.simbirsoft.dashboard.board.mapper.BoardMapper;
 import org.simbirsoft.dashboard.board.repository.BoardRepository;
 import org.simbirsoft.dashboard.board.service.BoardService;
 import org.simbirsoft.dashboard.project.entity.Project;
@@ -18,13 +20,18 @@ public class BoardServiceImpl implements BoardService {
 
     private final ProjectRepository projectRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository,ProjectRepository projectRepository){
+    private final BoardMapper boardMapper;
+
+    public BoardServiceImpl(BoardRepository boardRepository,
+                            ProjectRepository projectRepository,
+                            BoardMapper boardMapper){
         this.projectRepository = projectRepository;
         this.boardRepository = boardRepository;
+        this.boardMapper = boardMapper;
     }
 
     @Override
-    public Board create(String projectId) {
+    public BoardResponseDto create(Long projectId) {
         Optional<Project> project = projectRepository.findById(projectId);
 
         Board board = boardRepository.save(new Board());
@@ -33,21 +40,22 @@ public class BoardServiceImpl implements BoardService {
             project.get().setBoard(board);
             projectRepository.save(project.get());
         }
-        return board;
+        return boardMapper.fromEntity(board);
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         boardRepository.deleteById(id);
     }
 
     @Override
-    public Board getById(String id) {
-        return boardRepository.findById(id).orElseThrow(() -> new RuntimeException("Board not found"));
+    public BoardResponseDto getById(Long id) {
+        return boardMapper.fromEntity(boardRepository.findById(id).
+                orElseThrow(() -> new RuntimeException("Board not found")));
     }
 
     @Override
-    public Long getCountUnfinishedTask(String id) {
+    public Long getCountUnfinishedTask(Long id) {
         Optional<Board> board = boardRepository.findById(id);
         if (board.isPresent()){
             return board.
@@ -58,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
                     count();
 
         } else {
-            return null;
+            throw new RuntimeException("Board not present");
         }
     }
 }

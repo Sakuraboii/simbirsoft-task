@@ -1,14 +1,14 @@
 package org.simbirsoft.dashboard.project.service;
 
-import org.simbirsoft.dashboard.project.entity.Project;
 import org.simbirsoft.dashboard.project.entity.dto.ProjectRequestDto;
+import org.simbirsoft.dashboard.project.entity.dto.ProjectResponseDto;
 
 public interface ProjectService {
-    void create(Project project);
+    void create(ProjectRequestDto project);
 
-    Project getById(String id);
+    ProjectResponseDto getById(Long id);
 
-    void deleteById(String id);
+    void deleteById(Long id);
 
-    void updateProject(ProjectRequestDto projectRequestDto, String projectId);
+    ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, Long projectId);
 }

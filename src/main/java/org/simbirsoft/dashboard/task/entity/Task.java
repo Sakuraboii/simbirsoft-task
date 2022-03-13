@@ -1,6 +1,5 @@
 package org.simbirsoft.dashboard.task.entity;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.simbirsoft.dashboard.user.entity.User;
 
 import javax.persistence.*;
@@ -8,12 +7,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "SIMBIRSOFT_TASK")
-public class Task{
+public class Task {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @ManyToOne
     private User author;
@@ -39,16 +37,17 @@ public class Task{
                 Integer releaseVersion,
                 Status status,
                 Date registrationDate,
-                Date completionDate){
-        this.author =author;
-        this.executor =executor;
+                Date completionDate) {
+        this.author = author;
+        this.executor = executor;
         this.releaseVersion = releaseVersion;
         this.status = status;
         this.completionDate = completionDate;
         this.registrationDate = registrationDate;
     }
 
-    public Task(){}
+    public Task() {
+    }
 
     public Date getRegistrationDate() {
         return registrationDate;
@@ -66,7 +65,7 @@ public class Task{
         return status;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

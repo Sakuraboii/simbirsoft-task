@@ -5,15 +5,15 @@ import org.simbirsoft.dashboard.task.entity.dto.TaskResponseDto;
 import java.util.List;
 
 public class BoardResponseDto {
-    private String id;
+    private Long id;
 
     private List<TaskResponseDto> taskResponseDtos;
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

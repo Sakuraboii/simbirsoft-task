@@ -5,8 +5,8 @@ import org.simbirsoft.dashboard.task.entity.Status;
 import java.util.Date;
 
 public class TaskRequestDto {
-    String authorId;
-    String executorId;
+    Long authorId;
+    Long executorId;
     Integer releaseVersion;
     Status status;
     Date registrationDate;
@@ -44,19 +44,19 @@ public class TaskRequestDto {
         return registrationDate;
     }
 
-    public String getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 
-    public String getExecutorId() {
+    public Long getExecutorId() {
         return executorId;
     }
 
-    public void setExecutorId(String executorId) {
+    public void setExecutorId(Long executorId) {
         this.executorId = executorId;
     }
 }

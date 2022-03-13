@@ -1,5 +1,6 @@
 package org.simbirsoft.dashboard.core.urls;
 
 public interface Project {
-    String project = Root.root + "project";
+    String NAME = "project";
+    String PROJECT = Root.root + NAME;
 }

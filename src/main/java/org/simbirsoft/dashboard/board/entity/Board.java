@@ -12,9 +12,8 @@ import java.util.List;
 public class Board {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @OneToMany
     private List<Task> tasks;
@@ -25,7 +24,7 @@ public class Board {
 
     public Board(){}
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

@@ -1,13 +1,13 @@
 package org.simbirsoft.dashboard.board.service;
 
-import org.simbirsoft.dashboard.board.entity.Board;
+import org.simbirsoft.dashboard.board.entity.dto.BoardResponseDto;
 
 public interface BoardService {
-    Board create(String projectId);
+    BoardResponseDto create(Long projectId);
 
-    void deleteById(String id);
+    void deleteById(Long id);
 
-    Board getById(String id);
+    BoardResponseDto getById(Long id);
 
-    Long getCountUnfinishedTask(String id);
+    Long getCountUnfinishedTask(Long id);
 }

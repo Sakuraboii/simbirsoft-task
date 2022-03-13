@@ -1,26 +1,32 @@
 package org.simbirsoft.dashboard.user.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "SIMBIRSOFT_USER")
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @NotNull
     private String username;
 
     @Column(name = "password")
     @NotNull
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "SIMBIRSOFT_USERS_ROLES",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles = new ArrayList<>();
+
 
     public void setUsername(String username) {
         this.username = username;
@@ -38,8 +44,16 @@ public class User {
         return this.password;
     }
 
-    public String getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public User(String username, String password) {
@@ -47,7 +61,10 @@ public class User {
         this.username = username;
     }
 
-    public User(){
+    public User() {
+    }
 
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }
