@@ -106,6 +106,24 @@ databaseChangeLog:
                   type: BIGINT
 
   - changeSet:
+      id: create_role_table
+      author: kostya
+      changes:
+        - createTable:
+            tableName: simbirsoft_role
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: role_id
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+
+  - changeSet:
       id: create_project_table
       author: kostya
       changes:
@@ -136,4 +154,26 @@ databaseChangeLog:
                     foreignKeyName: fk_simbirsoft_board
                     references: simbirsoft_board(id)
                   name: board_id
+                  type: BIGINT
+
+  - changeSet:
+      id: create_users_role_table
+      author: kostya
+      changes:
+        - createTable:
+            tableName: simbirsoft_users_roles
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_simbirsoft_user
+                    references: simbirsoft_user(id)
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_simbirsoft_role
+                    references: simbirsoft_role(id)
+                  name: role_id
                   type: BIGINT
