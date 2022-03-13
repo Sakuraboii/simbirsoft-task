@@ -16,10 +16,27 @@ public class ProjectMapper {
     }
 
     public Project fromDto(ProjectRequestDto projectRequestDto) {
-        return null;
+        Project project = new Project();
+
+        project.setTitle(projectRequestDto.getTitle());
+        project.setDescription(projectRequestDto.getDescription());
+
+        return project;
     }
 
-    public ProjectResponseDto fromEntity(Project byId) {
-        return null;
+    public ProjectResponseDto fromEntity(Project project) {
+
+        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
+
+        projectResponseDto.setId(project.getId());
+
+        if (project.getBoard() != null) {
+            projectResponseDto.setBoard(boardMapper.fromEntity(project.getBoard()));
+        }
+        projectResponseDto.setTitle(project.getTitle());
+        projectResponseDto.setDescription(project.getDescription());
+        projectResponseDto.setStatus(project.getStatus());
+
+        return projectResponseDto;
     }
 }

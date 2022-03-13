@@ -1,6 +1,5 @@
 package org.simbirsoft.dashboard.project.entity;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.simbirsoft.dashboard.board.entity.Board;
 import org.simbirsoft.dashboard.task.entity.Status;
 
@@ -11,9 +10,8 @@ import javax.persistence.*;
 public class Project {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @OneToOne
     private Board board;
@@ -28,7 +26,7 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -48,7 +46,7 @@ public class Project {
         return status;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
